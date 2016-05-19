@@ -1,7 +1,7 @@
 import time
 
-from appmq import exc
-from appmq.server import Server
+from pairedmq import exc
+from pairedmq.server import Server
 
 
 class ExecEvalServer(Server):

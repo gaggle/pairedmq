@@ -4,9 +4,9 @@ import unittest
 
 import mock
 
-from appmq import exc
-from appmq.client import Client as _Client
-from appmq.lib.client_tools import getenv
+from pairedmq import exc
+from pairedmq.client import Client as _Client
+from pairedmq.lib.client_tools import getenv
 
 
 class Client(_Client):
@@ -36,7 +36,7 @@ class ExecEvalClient(_Client):
         return self.sendrecv(("exec", data), **kwargs)
 
 
-class TestAppmq(unittest.TestCase):
+class TestPairedmq(unittest.TestCase):
     def test_custom_methods(self):
         client = ExecEvalClient()
         assert client.eval("1 + 1") == 2
@@ -48,7 +48,7 @@ class TestAppmq(unittest.TestCase):
             Client(srver="SlowStartupServer", handshake_timeout=10)
 
     def test_client_handshake_timeout_kills_process(self):
-        with mock.patch("appmq.lib.client_tools.kill") as kill:
+        with mock.patch("pairedmq.lib.client_tools.kill") as kill:
             try:
                 Client(srver="SlowStartupServer", handshake_timeout=10)
             except exc.TimeoutError:
