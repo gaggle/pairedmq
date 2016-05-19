@@ -2,7 +2,7 @@ from contextlib import contextmanager
 
 import zmq
 
-from appmq.exc import TimeoutError
+from pairedmq.exc import TimeoutError
 
 
 @contextmanager

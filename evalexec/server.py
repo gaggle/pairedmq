@@ -1,8 +1,8 @@
-from appmq import exc
-from appmq.server import Server as _Server
+from pairedmq import exc
+from pairedmq.server import Server as _Server
 
 
-class Server(_Server):
+class EvalExecServer(_Server):
     def _process_message(self, data):
         func, arg = data
         try:

@@ -1,19 +1,19 @@
-class AppmqError(Exception):
+class PairedmqError(Exception):
     pass
 
 
-class ClientError(AppmqError):
+class ClientError(PairedmqError):
     pass
 
 
-class TimeoutError(AppmqError):
+class TimeoutError(PairedmqError):
     pass
 
 
 OK = 200
 
 
-class ServerError(AppmqError):
+class ServerError(PairedmqError):
     code = 500
 
 
