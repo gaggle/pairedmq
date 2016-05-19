@@ -14,7 +14,7 @@ to avoid polluting your main installation)
 
 Then follow these steps:
 
-    $ pip install pairedmq
+    $ pip install git+https://github.com/gaggle/pairedmq.git
     $ python
     >>> from evalexec.client import EvalExecClient
     >>> c = Client()
