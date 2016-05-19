@@ -56,10 +56,10 @@ class Client(object):
             raise exc.ClientError(response)
 
     def _sendrecv(self, data, timeout=None):
-        self.socket.send(data)
+        self.socket.send_string(data)
 
         if self.poller.poll(timeout):
-            received = self.socket.recv()
+            received = self.socket.recv_string()
         else:
             raise exc.TimeoutError(data)
         return received
