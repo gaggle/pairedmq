@@ -11,7 +11,7 @@ class ExecEvalServer(Server):
 
     @staticmethod
     def _exec(arg):
-        exec arg in globals(), globals()
+        exec(arg, globals(), globals())
 
     def _process_message(self, data):
         try:

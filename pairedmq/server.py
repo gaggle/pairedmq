@@ -22,7 +22,7 @@ class Server(object):
 
     def listen(self):
         while True:
-            received = self.socket.recv()
+            received = self.socket.recv_string()
             try:
                 try:
                     code = exc.OK
@@ -33,7 +33,7 @@ class Server(object):
                 pickled = self._pickle([code, response])
             except Exception:
                 pickled = self._pickle([exc.ServerError.code, _exc_str()])
-            self.socket.send(pickled)
+            self.socket.send_string(pickled)
 
     @abc.abstractmethod
     def _process_message(self, data):

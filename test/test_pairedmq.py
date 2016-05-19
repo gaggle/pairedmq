@@ -60,7 +60,7 @@ class TestPairedmq(unittest.TestCase):
                                 "S.create(%s);" % 9999]
         p = subprocess.Popen(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=getenv())
         out, err = p.communicate()
-        assert "TimeoutError" in err
+        assert "TimeoutError" in str(err)
 
     def test_hodor(self):
         client = Client(srver="SimpleServer")
