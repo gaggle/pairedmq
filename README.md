@@ -17,7 +17,7 @@ Then follow these steps:
     $ pip install git+https://github.com/gaggle/pairedmq.git
     $ python
     >>> from evalexec.client import EvalExecClient
-    >>> c = Client()
+    >>> c = EvalExecClient()
     >>> c.eval("1 + 1")
     2
 
