@@ -1,29 +1,9 @@
 import time
 
-from pairedmq import exc
+from evalexec.server import EvalExecServer as _EvalExecServer
 from pairedmq.server import Server
 
-
-class ExecEvalServer(Server):
-    @staticmethod
-    def _eval(arg):
-        return eval(arg, globals(), globals())
-
-    @staticmethod
-    def _exec(arg):
-        exec(arg, globals(), globals())
-
-    def _process_message(self, data):
-        try:
-            func, arg = data
-            if func == "exec":
-                self._exec(arg)
-                return
-            elif func == "eval":
-                return self._eval(arg)
-            raise exc.MethodNotAllowed(func)
-        except Exception as ex:
-            raise exc.BadRequestError(ex)
+EvalExecServer = _EvalExecServer
 
 
 class SimpleServer(Server):

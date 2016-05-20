@@ -21,4 +21,4 @@ class EvalExecServer(_Server):
 
     @classmethod
     def _exec(cls, arg):
-        exec arg in globals(), globals()
+        exec (arg, globals(), globals())

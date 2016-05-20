@@ -24,9 +24,9 @@ class Client(_Client):
                                 "as S; S.create(%s);" % (self.srver, handshake_port)]
 
 
-class ExecEvalClient(_Client):
+class EvalExecClient(_Client):
     def _launch_command(self, handshake_port):
-        return ["python", "-c", "from testimpl.servers import ExecEvalServer as S; "
+        return ["python", "-c", "from testimpl.servers import EvalExecServer as S; "
                                 "S.create(%s);" % handshake_port]
 
     def eval(self, data, **kwargs):
@@ -38,7 +38,7 @@ class ExecEvalClient(_Client):
 
 class TestPairedmq(unittest.TestCase):
     def test_custom_methods(self):
-        client = ExecEvalClient()
+        client = EvalExecClient()
         assert client.eval("1 + 1") == 2
         client.exec_("a = 1; b = 1; c = a + b")
         assert client.eval("c") == 2
