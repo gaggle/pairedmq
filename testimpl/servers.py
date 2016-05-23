@@ -1,6 +1,6 @@
 import time
 
-from evalexec.server import EvalExecServer as _EvalExecServer
+from pairedmq.evalexec.server import EvalExecServer as _EvalExecServer
 from pairedmq.server import Server
 
 EvalExecServer = _EvalExecServer

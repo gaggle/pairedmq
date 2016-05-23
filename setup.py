@@ -4,7 +4,7 @@ with open("requirements.txt") as requirements:
     with open("test_requirements.txt") as test_requirements:
         setup(
                 name="pairedmq",
-                version="0.0.1",
+                version="0.0.2",
                 packages=find_packages(),
                 url="https://github.com/gaggle/pairedmq",
                 license="MIT",
