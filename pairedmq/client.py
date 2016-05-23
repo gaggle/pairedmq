@@ -30,9 +30,12 @@ class Client(object):
             self.process.terminate()
             self.process.wait()
 
+        copier = tools.expose_modules("pairedmq")
+        tmppath = copier.__enter__()
+        atexit.register(copier.__exit__, None, None, None)
         with handshake_receiver(timeout=self.handshake_timeout) as (port, wait):
-            self.process = subprocess.Popen(self._launch_command(port), env=tools.getenv())
-
+            self.process = subprocess.Popen(self._launch_command(port),
+                                            env=tools.mergeenv(self._env(), [tmppath]))
             atexit.register(_safe_kill, self.process)
             try:
                 self.port = int(wait())
@@ -71,6 +74,9 @@ class Client(object):
         :rtype: str
         """
         pass
+
+    def _env(self):
+        return {}
 
     def _reconnect_connections(self):
         if hasattr(self, "socket"):
