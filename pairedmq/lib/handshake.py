@@ -10,19 +10,20 @@ def handshake_receiver(timeout=None):
     socket = zmq.Context().socket(zmq.REP)
     socket.setsockopt(zmq.LINGER, 0)
     port = socket.bind_to_random_port("tcp://127.0.0.1")
+    try:
+        def wait():
+            poller = zmq.Poller()
+            poller.register(socket, zmq.POLLIN)
+            if poller.poll(timeout):
+                received = int(socket.recv(zmq.DONTWAIT))
+                socket.send_string("")  # Ack reception
+            else:
+                raise TimeoutError("Handshake timeout")
+            return received
 
-    def wait():
-        poller = zmq.Poller()
-        poller.register(socket, zmq.POLLIN)
-        if poller.poll(timeout):
-            received = int(socket.recv(zmq.DONTWAIT))
-            socket.send_string("")  # Ack reception
-        else:
-            raise TimeoutError("Handshake timeout")
-        return received
-
-    yield (port, wait)
-    socket.close()
+        yield (port, wait)
+    finally:
+        socket.close()
 
 
 def handshake_sender(handshake_port, port, timeout=None):
