@@ -41,16 +41,16 @@ and returned to your client.
 ## The Next Step
 This library provides 5 extendable classes, so you can customize behavior to your liking:
 
-    from pairedmq.client import Client
-    from pairedmq.server import Server
-    from pairedmq.evalexec.client import EvalExecClient
-    from pairedmq.evalexec.server import EvalExecClient
-    from pairedmq.mayaclient.client import MayaClient
+    pairedmq.client.Client
+    pairedmq.server.Server
+    pairedmq.evalexec.client.EvalExecClient
+    pairedmq.evalexec.server.EvalExecClient
+    pairedmq.mayaclient.client.MayaClient
 
 You can inherit from either of these and override/extend as you please.
 The `pairedmq` baseclasses needs just one override each to get going,
 the `evalexec` classes are good to go as-is (they spawn a normal python process),
-and if your needs are specifically to run Maya you can use the `mayaclient` class.
+and if your needs are specifically to run Maya you can use the `MayaClient` class.
 
 
 ## Using Maya
@@ -64,7 +64,8 @@ which has several benefits over using the Maya Python interpreter directly:
 
 And it's pretty easy to do:
 
-First of all it's necessary to install ZMQ into Maya.
+First of all it's necessary to install ZMQ into Maya 
+(It's the underlying communication library through which client and server talks together).
 [This page has precompiled zip files specifically made for Maya][mayabinaries].
 Download the file matching your Maya version
 and extract it into `<maya version>/Python/Lib/site-packages`.
@@ -75,7 +76,7 @@ Usually:
 
 The `site-packages` folder should end up containing a `zmq` folder.
 
-Now let's create a MayaClient:
+Now let's create a `MayaClient`:
 
     > python
     >>> from pairedmq.mayaclient.client import MayaClient
@@ -83,14 +84,14 @@ Now let's create a MayaClient:
 
 That `exe` string has to point to where you have Maya installed, usually it's:
 
-* Windows: `"C:\Program Files\Autodesk\<Maya version>\bin\mayabatch.exe"`
-* Mac: `"/applications/autodesk/<maya version>/bin/mayabatch"` on Mac
+* Windows: `r"C:\Program Files\Autodesk\<Maya version>\bin\mayabatch.exe"`
+* Mac: `r"/applications/autodesk/<maya version>/bin/mayabatch"` on Mac
 
 And finally let's create a sphere and get its radius:
 
-    >>> c.exec_("import pymel.core as pmc", timeout=60000, silent=True)
-    >>> c.exec_("transform, sphere = pmc.polySphere()")
-    >>> c.eval("sphere.radius.get()")
+    >>> c.exec_("import pymel.core as pmc", timeout=60000)
+    >>> c.exec_("t, s = pmc.polySphere()")
+    >>> c.eval("s.radius.get()")
     1.0
 
 That's it, the full power of Maya is in your hands. Now make something cool!
