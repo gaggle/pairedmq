@@ -22,7 +22,7 @@ def expose_modules(*modulenames):
 
     try:
         copypaths = dict(map(modulename_to_srcdst, modulenames))
-        [copy_tree(src, dst) for (src, dst) in copypaths.iteritems()]
+        [copy_tree(src, dst) for (src, dst) in copypaths.items()]
         yield tmpdir
     finally:
         rmtree(tmpdir, ignore_errors=True)
